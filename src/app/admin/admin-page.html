@@ -1,0 +1,93 @@
+<main class="admin-page">
+  <section class="backoffice">
+    <header class="section-head">
+      <div>
+        <p class="kicker">Zona Operativa</p>
+        <h1>Backoffice de inventario</h1>
+      </div>
+      <button type="button" class="btn btn-soft" (click)="api.loadProducts(50)" [disabled]="api.loadingProducts()">
+        Actualizar lista
+      </button>
+    </header>
+
+    <form class="login-form" [formGroup]="loginForm" (ngSubmit)="login()">
+      <label>
+        Usuario
+        <input type="text" formControlName="username" autocomplete="username" />
+      </label>
+
+      <label>
+        Password
+        <input type="password" formControlName="password" autocomplete="current-password" />
+      </label>
+
+      <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">
+        Iniciar sesion
+      </button>
+    </form>
+
+    @if (api.error()) {
+      <p class="error" role="alert">{{ api.error() }}</p>
+    }
+
+    <section class="toolbar">
+      <p>
+        Estado de acceso:
+        <strong>
+          @if (api.isAuthenticated()) {
+            autenticado
+          } @else {
+            invitado
+          }
+        </strong>
+      </p>
+
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="api.createDemoProduct()"
+        [disabled]="!api.isAuthenticated() || api.creatingProduct()"
+      >
+        @if (api.creatingProduct()) {
+          Creando producto...
+        } @else {
+          Crear producto demo
+        }
+      </button>
+    </section>
+
+    <section class="table-wrap" aria-live="polite">
+      @if (api.loadingProducts()) {
+        <p class="loading">Cargando productos...</p>
+      } @else if (api.totalProducts() === 0) {
+        <p class="empty">No hay productos para mostrar.</p>
+      } @else {
+        <table>
+          <caption>
+            Catalogo actual ({{ api.totalProducts() }})
+          </caption>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Descripcion</th>
+              <th>Categoria</th>
+              <th>Precio</th>
+              <th>Stock</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (product of api.products(); track product.id) {
+              <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.categoryName }}</td>
+                <td>{{ product.price | currency: 'USD' }}</td>
+                <td>{{ product.stock }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </section>
+  </section>
+</main>

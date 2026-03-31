@@ -1,0 +1,64 @@
+<main class="cart-page">
+  <header class="cart-head">
+    <div>
+      <p class="kicker">Carrito</p>
+      <h1>Resumen de compra</h1>
+    </div>
+    <a class="btn btn-outline" routerLink="/">Seguir comprando</a>
+  </header>
+
+  @if (pageLoading()) {
+    <section class="cart-layout skeleton-layout" aria-label="Cargando carrito">
+      <div class="items">
+        @for (item of [1, 2, 3]; track item) {
+          <article class="item-row skeleton-card">
+            <div class="skeleton-line short"></div>
+            <div class="skeleton-line title"></div>
+            <div class="skeleton-line"></div>
+          </article>
+        }
+      </div>
+      <aside class="summary skeleton-card">
+        <div class="skeleton-line title"></div>
+        <div class="skeleton-line"></div>
+        <div class="skeleton-line"></div>
+      </aside>
+    </section>
+  } @else if (cart.items().length === 0) {
+    <section class="empty-state">
+      <p>Tu carrito esta vacio.</p>
+      <a class="btn btn-primary" routerLink="/">Descubrir productos</a>
+    </section>
+  } @else {
+    <section class="cart-layout">
+      <div class="items">
+        @for (item of cart.items(); track item.product.id) {
+          <article class="item-row">
+            <div>
+              <p class="badge">{{ item.product.categoryName }}</p>
+              <h2>{{ item.product.name }}</h2>
+              <p>{{ item.product.description }}</p>
+            </div>
+
+            <div class="qty-box">
+              <button type="button" (click)="decrement(item.product.id, item.quantity)">-</button>
+              <span>{{ item.quantity }}</span>
+              <button type="button" (click)="increment(item.product.id, item.quantity)">+</button>
+            </div>
+
+            <strong>{{ item.product.price * item.quantity | currency: 'USD' }}</strong>
+          </article>
+        }
+      </div>
+
+      <aside class="summary">
+        <h2>Total</h2>
+        <p><span>Subtotal</span><strong>{{ cart.subtotal() | currency: 'USD' }}</strong></p>
+        <p><span>Envio</span><strong>{{ shipping() | currency: 'USD' }}</strong></p>
+        <p class="grand"><span>Total</span><strong>{{ total() | currency: 'USD' }}</strong></p>
+        <a class="btn btn-primary" routerLink="/checkout">Finalizar compra</a>
+        <button class="btn btn-outline" type="button" (click)="cart.clear()">Vaciar carrito</button>
+      </aside>
+    </section>
+  }
+</main>

@@ -1,0 +1,91 @@
+<main class="checkout-page">
+  <header>
+    <p class="kicker">Checkout</p>
+    <h1>Finaliza tu compra</h1>
+  </header>
+
+  @if (pageLoading()) {
+    <section class="checkout-layout skeleton-layout" aria-label="Cargando checkout">
+      <div class="form skeleton-card">
+        <div class="skeleton-line title"></div>
+        <div class="skeleton-line"></div>
+        <div class="skeleton-line"></div>
+        <div class="skeleton-line"></div>
+      </div>
+      <aside class="summary skeleton-card">
+        <div class="skeleton-line title"></div>
+        <div class="skeleton-line"></div>
+        <div class="skeleton-line"></div>
+      </aside>
+    </section>
+  } @else if (orderPlaced()) {
+    <section class="confirmation" aria-live="polite">
+      <h2>Pedido confirmado</h2>
+      <p>Tu orden <strong>{{ orderNumber() }}</strong> fue registrada correctamente.</p>
+      <a class="btn btn-primary" routerLink="/">Volver al inicio</a>
+    </section>
+  } @else {
+    <section class="checkout-layout">
+      <form class="form" [formGroup]="checkoutForm" (ngSubmit)="placeOrder()">
+        <label>
+          Nombre completo
+          <input type="text" formControlName="fullName" />
+        </label>
+
+        <label>
+          Correo
+          <input type="email" formControlName="email" />
+        </label>
+
+        <label>
+          Direccion
+          <input type="text" formControlName="address" />
+        </label>
+
+        <label>
+          Ciudad
+          <input type="text" formControlName="city" />
+        </label>
+
+        <label>
+          Codigo postal
+          <input type="text" formControlName="postalCode" />
+        </label>
+
+        @if (error()) {
+          <p class="error" role="alert">{{ error() }}</p>
+        }
+
+        <button class="btn btn-primary" type="submit" [disabled]="cart.itemCount() === 0 || placingOrder()">
+          @if (placingOrder()) {
+            Enviando orden...
+          } @else {
+            Confirmar pedido
+          }
+        </button>
+      </form>
+
+      <aside class="summary">
+        <h2>Resumen</h2>
+
+        @if (cart.items().length === 0) {
+          <p class="empty">No tienes productos en el carrito.</p>
+        } @else {
+          <ul>
+            @for (item of cart.items(); track item.product.id) {
+              <li>
+                <span>{{ item.product.name }} x{{ item.quantity }}</span>
+                <strong>{{ item.product.price * item.quantity | currency: 'USD' }}</strong>
+              </li>
+            }
+          </ul>
+          <p><span>Subtotal</span><strong>{{ cart.subtotal() | currency: 'USD' }}</strong></p>
+          <p><span>Envio</span><strong>{{ shipping() | currency: 'USD' }}</strong></p>
+          <p class="grand"><span>Total</span><strong>{{ total() | currency: 'USD' }}</strong></p>
+        }
+
+        <a class="btn btn-outline" routerLink="/cart">Volver al carrito</a>
+      </aside>
+    </section>
+  }
+</main>

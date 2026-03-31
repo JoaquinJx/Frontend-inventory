@@ -1,0 +1,37 @@
+<main class="detail-page">
+  <a class="back-link" routerLink="/">Volver a inicio</a>
+
+  @if (api.loadingProducts()) {
+    <section class="detail-card detail-skeleton" aria-label="Cargando detalle de producto">
+      <div class="skeleton-line short"></div>
+      <div class="skeleton-line title"></div>
+      <div class="skeleton-line"></div>
+      <div class="skeleton-line"></div>
+      <div class="skeleton-line short"></div>
+    </section>
+  } @else if (!product()) {
+    <section class="empty-state">
+      <h1>Producto no encontrado</h1>
+      <p>Este item no esta disponible en el catalogo actual.</p>
+      <a class="btn btn-primary" routerLink="/">Regresar al catalogo</a>
+    </section>
+  } @else {
+    <section class="detail-card">
+      <p class="badge">{{ product()!.categoryName }}</p>
+      <h1>{{ product()!.name }}</h1>
+      <p class="description">{{ product()!.description }}</p>
+
+      <div class="meta">
+        <strong>{{ product()!.price | currency: 'USD' }}</strong>
+        <span>Stock disponible: {{ product()!.stock }}</span>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" type="button" (click)="addToCart()">
+          Agregar al carrito
+        </button>
+        <a class="btn btn-outline" routerLink="/cart">Ver carrito ({{ cart.itemCount() }})</a>
+      </div>
+    </section>
+  }
+</main>

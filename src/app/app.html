@@ -1,0 +1,31 @@
+<div class="shell">
+  <header class="topbar">
+    <a routerLink="/" class="brand">Mercat</a>
+    <button class="menu-toggle" type="button" (click)="toggleMenu()" aria-label="Abrir menu">
+      Menu
+    </button>
+    <nav aria-label="Navegacion principal" [class.open]="menuOpen()">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMenu()">Inicio</a>
+      <a routerLink="/cart" routerLinkActive="active" (click)="closeMenu()">Carrito ({{ cart.itemCount() }})</a>
+      <a routerLink="/admin" routerLinkActive="active" (click)="closeMenu()">Backoffice</a>
+    </nav>
+
+    <label class="theme-switcher">
+      Tema
+      <select [value]="theme.currentTheme()" (change)="setTheme($event)" aria-label="Seleccionar tema" (click)="$event.stopPropagation()">
+        <option value="sunset-pop">Sunset Pop</option>
+        <option value="ocean-glow">Ocean Glow</option>
+        <option value="mint-fizz">Mint Fizz</option>
+      </select>
+    </label>
+  </header>
+
+  <router-outlet />
+
+  @if (toast.message(); as message) {
+    <div class="toast" role="status" aria-live="polite">
+      <p>{{ message.text }}</p>
+      <button type="button" (click)="toast.dismiss()" aria-label="Cerrar notificacion">Cerrar</button>
+    </div>
+  }
+</div>

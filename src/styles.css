@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+	--brand-rose: #e11d48;
+	--brand-orange: #f97316;
+	--brand-cyan: #06b6d4;
+	--ink-900: #1f2937;
+	--ink-600: #4b5563;
+	--surface-soft: rgba(255, 255, 255, 0.82);
+	--bg-layer-1: rgba(225, 29, 72, 0.12);
+	--bg-layer-2: rgba(6, 182, 212, 0.12);
+	--bg-gradient: linear-gradient(160deg, #fff7ed 0%, #fff1f2 45%, #eff6ff 100%);
+}
+
+body[data-theme='ocean-glow'] {
+	--brand-rose: #0ea5e9;
+	--brand-orange: #14b8a6;
+	--brand-cyan: #8b5cf6;
+	--bg-layer-1: rgba(14, 165, 233, 0.18);
+	--bg-layer-2: rgba(20, 184, 166, 0.16);
+	--bg-gradient: linear-gradient(160deg, #eff6ff 0%, #ecfeff 45%, #f5f3ff 100%);
+}
+
+body[data-theme='mint-fizz'] {
+	--brand-rose: #22c55e;
+	--brand-orange: #f59e0b;
+	--brand-cyan: #06b6d4;
+	--bg-layer-1: rgba(34, 197, 94, 0.14);
+	--bg-layer-2: rgba(245, 158, 11, 0.14);
+	--bg-gradient: linear-gradient(160deg, #f0fdf4 0%, #fffbeb 45%, #ecfeff 100%);
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	font-family: 'Space Grotesk', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	background:
+		radial-gradient(circle at 15% 10%, var(--bg-layer-1) 0, transparent 32%),
+		radial-gradient(circle at 85% 22%, var(--bg-layer-2) 0, transparent 35%),
+		var(--bg-gradient);
+	color: var(--ink-900);
+	min-height: 100dvh;
+}
+
+::selection {
+	background: rgba(6, 182, 212, 0.25);
+	color: #111827;
+}
+
+button,
+a {
+	transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+	animation-duration: 240ms;
+	animation-timing-function: ease;
+}
+
+button:hover,
+a:hover {
+	transform: translateY(-1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}
