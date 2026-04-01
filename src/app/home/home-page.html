@@ -1,5 +1,5 @@
 <main class="home-page">
-  <section class="hero">
+  <section id="hero" class="hero">
     <div class="hero-copy">
       <p class="kicker">Ecommerce Platform</p>
       <h1>Tu vitrina digital para vender mas y mejor.</h1>
@@ -143,18 +143,20 @@
       </div>
 
       <div class="pagination" aria-label="Paginacion de catalogo">
-        <button class="btn btn-outline" type="button" (click)="previousPage()" [disabled]="currentPage() <= 1">
-          Anterior
-        </button>
+        <div class="pagination-actions">
+          <button class="btn btn-outline" type="button" (click)="previousPage()" [disabled]="currentPage() <= 1">
+            Anterior
+          </button>
+          <button
+            class="btn btn-outline"
+            type="button"
+            (click)="nextPage()"
+            [disabled]="currentPage() >= totalPages()"
+          >
+            Siguiente
+          </button>
+        </div>
         <p>Pagina {{ currentPage() }} de {{ totalPages() }}</p>
-        <button
-          class="btn btn-outline"
-          type="button"
-          (click)="nextPage()"
-          [disabled]="currentPage() >= totalPages()"
-        >
-          Siguiente
-        </button>
       </div>
     }
   </section>

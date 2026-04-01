@@ -276,7 +276,30 @@ a:focus-visible {
 }
 
 .product-grid {
+  margin-top: 1.35rem;
   grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.pagination {
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.pagination-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.pagination p {
+  margin: 0;
+  color: #57534e;
+  font-size: 0.9rem;
+  font-weight: 600;
 }
 
 .badge {
@@ -296,7 +319,8 @@ a:focus-visible {
 }
 
 .product-meta {
-  margin-top: 0.6rem;
+  margin-top: auto;
+  padding-top: 0.7rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -356,7 +380,13 @@ a:focus-visible {
 }
 
 .product-card {
+  display: flex;
+  flex-direction: column;
   animation: cardIn 360ms ease-out both;
+}
+
+.product-card > p:nth-of-type(2) {
+  margin-bottom: 0;
 }
 
 .product-card.added {
@@ -392,7 +422,7 @@ a:focus-visible {
 
 .loading,
 .empty {
-  margin: 1rem 0 0;
+  margin: 1.2rem 0 0;
   color: #57534e;
 }
 
@@ -468,6 +498,13 @@ a:focus-visible {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.35rem;
+  }
+
+  .pagination {
+    margin-top: 1.25rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.55rem;
   }
 }
 

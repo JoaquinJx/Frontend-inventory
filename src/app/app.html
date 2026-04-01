@@ -5,7 +5,7 @@
       Menu
     </button>
     <nav aria-label="Navegacion principal" [class.open]="menuOpen()">
-      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMenu()">Inicio</a>
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="goHome($event)">Inicio</a>
       <a routerLink="/cart" routerLinkActive="active" (click)="closeMenu()">Carrito ({{ cart.itemCount() }})</a>
       <a routerLink="/admin" routerLinkActive="active" (click)="closeMenu()">Backoffice</a>
     </nav>
