@@ -7,7 +7,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://inventory-api.onrender.com/api/:path*"
+      "destination": "https://inventory-api-d3r8.onrender.com/api/:path*"
     }
   ]
 }
